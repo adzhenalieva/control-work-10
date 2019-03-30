@@ -7,7 +7,7 @@ CREATE TABLE `news` (
   `title` VARCHAR(255) NOT NULL,
   `description` TEXT NOT NULL,
   `image` VARCHAR(255) NULL,
-  `date` DATE NOT NULL,
+  `date` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`));
 
 CREATE TABLE `comments` (
@@ -24,7 +24,7 @@ CREATE TABLE `comments` (
     ON UPDATE CASCADE);
 
 INSERT INTO `news` (`title`, `description`, `date`)
-VALUES ('New kindergarden',  'New kindergarden was opened in Bishkek', '2019-03-30'), ('V.Putin visited Bishkek',  'The president of RF has visited Bishkek', '2019-03-28'), ('New hospital',  'New hospital was opened in Bishkek', '2019-03-30');
+VALUES ('New kindergarden',  'New kindergarden was opened in Bishkek', '2019-03-28T14:48:00.000Z'), ('V.Putin visited Bishkek',  'The president of RF has visited Bishkek', '2019-03-28T14:48:00.000Z'), ('New hospital',  'New hospital was opened in Bishkek', '2019-03-30T14:48:00.000Z');
 
 INSERT INTO `comments` (`news_id`, `author`, `comment`)
 VALUES (1,  'Mario', 'Great news'), (2,  'Leo', 'Nice news'), (3,  'Miki', 'Super');
