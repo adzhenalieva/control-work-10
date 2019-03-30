@@ -25,6 +25,9 @@ const createRouter = connection => {
     });
     router.post('/', (req, res) => {
         const comment = req.body;
+        if(comment.author === ""){
+            comment.author = "Anonymous";
+        }
 
         connection.query('INSERT INTO `comments` (`news_id`, `author`, `comment`) VALUES (?, ?, ?)', [comment.news_id, comment.author, comment.comment], (error) => {
             if (error) {
