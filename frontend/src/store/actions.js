@@ -8,16 +8,17 @@ export const FETCH_ONE_ITEM_SUCCESS = "FETCH_ONE_ITEM_SUCCESS";
 export const DELETED = "DELETED";
 export const CREATE_NEW_COMMENT_SUCCESS = "CREATE_NEW_COMMENT_SUCCESS";
 export const FETCH_COMMENT_SUCCESS = "FETCH_COMMENT_SUCCESS";
+
+
 export const fetchDataSuccess = data => {
     return {type: FETCH_DATA_SUCCESS, data};
 };
 export const dataFailure = error => ({type: FETCH_FAILURE, error});
 
-export const fetchOneItemSuccess = item => {
-    return {type: FETCH_ONE_ITEM_SUCCESS, item};
+export const fetchOneItemSuccess = (item, id) => {
+    return {type: FETCH_ONE_ITEM_SUCCESS, item, id};
 };
 export const createNewSuccess = () => ({type: CREATE_NEW_SUCCESS});
-export const createNewCommentSuccess = () => ({type: CREATE_NEW_COMMENT_SUCCESS});
 export const fetchCommentsSuccess = data => {
     return {type: FETCH_COMMENT_SUCCESS, data};
 };
@@ -71,7 +72,6 @@ export const createNews = data => {
         return axios.post('/news', data).then(
             () => {
                 dispatch(createNewSuccess());
-                dispatch(createNotification('success'));
             }, error => {
                 dispatch(dataFailure(error));
             }
@@ -79,12 +79,11 @@ export const createNews = data => {
     };
 };
 
-export const createComment = data => {
+export const sendComment = data => {
     return dispatch => {
         return axios.post('/comments', data).then(
             () => {
-                dispatch(createNewCommentSuccess());
-                dispatch(createNotification('success'));
+                dispatch(createNewSuccess());
             }, error => {
                 dispatch(dataFailure(error));
             }
@@ -96,7 +95,7 @@ export const openOneItem = id => {
     return dispatch => {
         return axios.get('/news/' + id).then(
             response => {
-                dispatch(fetchOneItemSuccess(response.data))
+                dispatch(fetchOneItemSuccess(response.data, id))
             }, error => {
                 dispatch(dataFailure(error));
                 dispatch(createNotification('error'));
@@ -110,10 +109,7 @@ export const dataDelete = (id, history) => {
     return dispatch => {
         axios.delete('/news/' + id).then(() => {
             dispatch({type: DELETED});
-            dispatch(createNotification('success'));
-            history.push({
-                pathname: '/news'
-            })
+           history.push('/news');
         })
     };
 };
@@ -121,9 +117,7 @@ export const commentDelete = (id, history) => {
     return dispatch => {
         axios.delete('/comments/' + id).then(() => {
             dispatch(createNotification('success'));
-            history.push({
-                pathname: '/news'
-            })
+            history.push('/news');
         })
     };
 };

@@ -1,14 +1,42 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from "react-redux";
 import {NotificationContainer} from 'react-notifications';
-import {openOneItem, dataDelete, commentDelete, createComment, fetchComments} from "../../store/actions";
-import {Card, CardBody, CardTitle, CardText, Button} from "reactstrap";
+import {openOneItem, dataDelete, commentDelete, fetchComments, sendComment} from "../../store/actions";
+import {Card, CardBody, Button, Col, Form, FormGroup, Input, Label} from "reactstrap"
+
 
 import FullNewsItem from "../../components/FullNewsItem/FullNewsItem";
-import CommentForm from "../../components/CommentForm/CommentForm";
+
+
 
 
 class NewsFull extends Component {
+
+    state = {
+        author: '',
+        comment: ''
+    };
+
+
+    submitForm = event => {
+        const id = this.props.match.params.id;
+
+        event.preventDefault();
+        const formData = {
+            news_id: id,
+            author: this.state.author,
+            comment: this.state.comment
+        };
+        this.props.onCreated(formData).then(()=> {
+            this.props.fetchComments(id);
+            this.setState({author: '', comment: ''})
+        });
+    };
+
+    inputChangeHandler = event => {
+        this.setState({[event.target.name]: event.target.value})
+    };
+
 
     componentDidMount() {
         const id = this.props.match.params.id;
@@ -17,18 +45,19 @@ class NewsFull extends Component {
     }
 
     delete = id => {
-        const history = this.props.history;
+        let history = this.props.history;
         this.props.delete(id, history);
+
     };
+
     deleteComment = id => {
         const history = this.props.history;
         this.props.deleteComment(id, history);
+
     };
 
-    createComment = data => {
-        const id = this.props.match.params.id;
-        console.log(id);
-    };
+    
+
 
     dateFormat = date => {
         let datetime1 = date;
@@ -41,18 +70,18 @@ class NewsFull extends Component {
     render() {
         let comments = this.props.comments;
         if (comments.length === 0) {
-            comments = <h4>Leave your comment here</h4>;
+            comments = <h4>No comments yet</h4>;
         } else {
             comments = this.props.comments.map(comment => (
                 <Card body outline color="warning" key={comment.id} style={{marginBottom: '10px'}}>
                     <CardBody>
-                        <CardTitle className="mb-4">
+                        <span className="mr-4">
                             <strong>{comment.author}</strong>
-                        </CardTitle>
-                        <CardText>
+                        </span>
+                        <span className="mr-4" >
                             {comment.comment}
-                        </CardText>
-                        <Button color="warning"  onClick={() => this.deleteComment(comment.id)}>Delete</Button>
+                        </span>
+                        <Button color="warning" className="float-right" onClick={() => this.deleteComment(comment.id)}>X</Button>
                     </CardBody>
                 </Card>
             ));
@@ -69,7 +98,38 @@ class NewsFull extends Component {
                     />
                     : null}
                 {comments}
-                <CommentForm onSubmit={this.createComment}/>
+                <h4 className="mb-4">Leave your comment</h4>
+                <Form onSubmit={this.submitForm}>
+                    <FormGroup row>
+                        <Label sm={2} for="comment">Comment</Label>
+                        <Col sm={10}>
+                            <Input required
+                                   type="textarea"
+                                   name="comment" id="comment"
+                                   placeholder="Enter comment"
+                                   value={this.state.comment}
+                                   onChange={this.inputChangeHandler}
+                            />
+                        </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                        <Label sm={2} for="author">Author</Label>
+                        <Col sm={10}>
+                            <Input required
+                                   type="textarea"
+                                   name="author" id="author"
+                                   placeholder="Enter name"
+                                   value={this.state.author}
+                                   onChange={this.inputChangeHandler}
+                            />
+                        </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                        <Col sm={{offset: 2, size: 10}}>
+                            <Button type="submit" color="warning">Save</Button>
+                        </Col>
+                    </FormGroup>
+                </Form>
                 <NotificationContainer/>
             </Fragment>
         );
@@ -88,9 +148,9 @@ const mapDispatchToProps = dispatch => {
     return {
         openFull: id => dispatch(openOneItem(id)),
         delete: (id, history) => dispatch(dataDelete(id, history)),
-        onCommentCreated: data => dispatch(createComment(data)),
         fetchComments: id => dispatch(fetchComments(id)),
         deleteComment: (id, history) => dispatch(commentDelete(id, history)),
+        onCreated: data => dispatch(sendComment(data))
     }
 };
 

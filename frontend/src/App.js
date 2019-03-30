@@ -18,8 +18,6 @@ class App extends Component {
               <Route path="/news" exact component={News}/>
               <Route path="/news/new" component={NewPieceOfNews}/>
               <Route path="/news/:id" component={NewsFull}/>
-              {/*<Route path="/items" exact component={Items}/>*/}
-
             </Switch>
           </Container>
         </Fragment>

@@ -9,7 +9,8 @@ const initialState = {
     news: [],
     comments: [],
     error: null,
-    oneItem: null
+    oneItem: null,
+    oneItemId: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -33,12 +34,14 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 oneItem: null,
+                oneItemId: null,
                 error: action.error
             };
         case FETCH_ONE_ITEM_SUCCESS:
             return {
                 ...state,
-                oneItem: action.item
+                oneItem: action.item,
+                oneItemId: action.id
             };
         default:
             return state;

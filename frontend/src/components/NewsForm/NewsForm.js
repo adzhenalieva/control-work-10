@@ -47,7 +47,7 @@ class NewsForm extends Component {
                     </Col>
                 </FormGroup>
                 <FormGroup row>
-                    <Label sm={2} for="description">MDescription</Label>
+                    <Label sm={2} for="description">Description</Label>
                     <Col sm={10}>
                         <Input required
                                type="textarea"
