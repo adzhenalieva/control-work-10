@@ -94,7 +94,7 @@ class NewsFull extends Component {
                     />
                     : null}
                 {comments}
-                <h4 className="mb-4">Leave your comment</h4>
+                <h4 className="my-4">Leave your comment</h4>
                 <Form onSubmit={this.submitForm}>
                     <FormGroup row>
                         <Label sm={2} for="comment">Comment</Label>
