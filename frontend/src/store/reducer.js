@@ -2,11 +2,12 @@ import {
     FETCH_DATA_SUCCESS,
     FETCH_ONE_ITEM_SUCCESS,
     FETCH_FAILURE,
-    DELETED
+    DELETED, FETCH_COMMENT_SUCCESS
 } from "./actions";
 
 const initialState = {
     news: [],
+    comments: [],
     error: null,
     oneItem: null
 };
@@ -17,6 +18,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 news: action.data
+            };
+        case FETCH_COMMENT_SUCCESS:
+            return {
+                ...state,
+                comments: action.data
             };
         case FETCH_FAILURE:
             return {

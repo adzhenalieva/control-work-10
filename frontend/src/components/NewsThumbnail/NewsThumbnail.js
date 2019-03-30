@@ -8,7 +8,7 @@ const styles = {
     marginBottom: '20px'
 };
 
-const ItemThumbnail = props => {
+const NewsThumbnail = props => {
 
     let image = null;
 
@@ -20,4 +20,4 @@ const ItemThumbnail = props => {
 
 };
 
-export default ItemThumbnail;
+export default NewsThumbnail;

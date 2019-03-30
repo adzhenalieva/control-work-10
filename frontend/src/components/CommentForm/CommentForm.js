@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import {Button, Col, Form, FormGroup, Input, Label} from "reactstrap";
+import {NotificationContainer} from 'react-notifications';
 
 
-class NewsForm extends Component {
+class CommentForm extends Component {
 
     state = {
-        title: '',
-        description: '',
-        image: '',
-        date: new Date().toISOString()
+        news_id: 4,
+        author: '',
+        comment: '',
     };
 
 
@@ -24,47 +24,43 @@ class NewsForm extends Component {
     inputChangeHandler = event => {
         this.setState({[event.target.name]: event.target.value})
     };
-    fileChangeHandler = event => {
-        this.setState({
-            [event.target.name]: event.target.files[0]
-        })
-
-    };
 
     render() {
         return (
             <Form onSubmit={this.submitFormHandler}>
+                {/*<FormGroup row>*/}
+                {/*    <Label sm={2} for="news_id">News_id</Label>*/}
+                {/*    <Col sm={10}>*/}
+                {/*        <Input required*/}
+                {/*               type="text"*/}
+                {/*               name="news_id" id="news_id"*/}
+                {/*               placeholder="Enter news_id"*/}
+                {/*               value={this.state.news_id}*/}
+                {/*               onChange={this.inputChangeHandler}*/}
+                {/*        />*/}
+                {/*    </Col>*/}
+                {/*</FormGroup>*/}
                 <FormGroup row>
-                    <Label sm={2} for="title">News title</Label>
+                    <Label sm={2} for="author">Your name</Label>
                     <Col sm={10}>
-                        <Input required
+                        <Input
                                type="text"
-                               name="title" id="title"
-                               placeholder="Enter news title"
-                               value={this.state.title}
+                               name="author" id="author"
+                               placeholder="Enter your name"
+                               value={this.state.author}
                                onChange={this.inputChangeHandler}
                         />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
-                    <Label sm={2} for="description">MDescription</Label>
+                    <Label sm={2} for="comment">Comment</Label>
                     <Col sm={10}>
                         <Input required
                                type="textarea"
-                               name="description" id="description"
-                               placeholder="Enter description"
-                               value={this.state.description}
+                               name="comment" id="comment"
+                               placeholder="Enter your comment"
+                               value={this.state.comment}
                                onChange={this.inputChangeHandler}
-                        />
-                    </Col>
-                </FormGroup>
-                <FormGroup row>
-                    <Label sm={2} for="image">Image</Label>
-                    <Col sm={10}>
-                        <Input
-                            type="file"
-                            name="image" id="image"
-                            onChange={this.fileChangeHandler}
                         />
                     </Col>
                 </FormGroup>
@@ -73,9 +69,10 @@ class NewsForm extends Component {
                         <Button type="submit" color="warning">Save</Button>
                     </Col>
                 </FormGroup>
+                <NotificationContainer/>
             </Form>
         );
     }
 }
 
-export default NewsForm;
+export default CommentForm;

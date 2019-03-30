@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {Card, CardBody, CardTitle, CardText, CardColumns} from "reactstrap";
 import {NotificationContainer} from 'react-notifications';
 import {fetchData} from "../../store/actions";
-import ItemThumbnail from "../../components/ItemThumbnail/ItemThumbnail";
+import NewsThumbnail from "../../components/NewsThumbnail/NewsThumbnail";
 
 
 
@@ -41,7 +41,7 @@ class News extends Component {
                         <CardText>
                             {this.dateFormat(news.date)}
                         </CardText>
-                        <ItemThumbnail image={news.image}/>
+                        <NewsThumbnail image={news.image}/>
                     </CardBody>
                 </Card>
             ));
