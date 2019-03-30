@@ -53,11 +53,7 @@ class NewsFull extends Component {
     deleteComment = id => {
         const history = this.props.history;
         this.props.deleteComment(id, history);
-
     };
-
-    
-
 
     dateFormat = date => {
         let datetime1 = date;
